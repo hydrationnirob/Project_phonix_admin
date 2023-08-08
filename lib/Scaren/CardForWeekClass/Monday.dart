@@ -38,7 +38,7 @@ class _MondayWeekClassState extends State<MondayWeekClass> {
       ),
       body: Column(
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             height: 150,
             child: Lottie.asset('images/animation_lki1kf82.json', fit: BoxFit.cover,),

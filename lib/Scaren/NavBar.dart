@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:phoenix_user/Scaren/ChatboxSys/UiBox.dart';
 
 import 'All_Class_List_scen.dart';
 import 'BusTime.dart';
@@ -79,6 +80,10 @@ class _NavButtonState extends State<NavButton> {
               icon: Icons.bus_alert,
               text: "Bus Schedule",
             ),
+            GButton(
+              icon: Icons.chat,
+              text: "Notice",
+            ),
           ],
         ),
         body: Obx(() {
@@ -96,5 +101,6 @@ class NevController extends GetxController {
     const HomeScen(),
     const AllClassList(),
     const Bustime(),
+     ChatScreen(),
   ];
 }
