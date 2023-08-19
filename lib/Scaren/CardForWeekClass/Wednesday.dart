@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:phoenix_user/Utiletis/reUseAble/DatabaseCollection.dart';
 import '../../Utiletis/reUseAble/HomePageCardWidget.dart';
 import "package:get/get.dart";
 
@@ -27,7 +28,12 @@ class _WednesdayWeekClassState extends State<WednesdayWeekClass> {
   @override
   void initState() {
     super.initState();
-    wednesdayData = FirebaseFirestore.instance.collection(collectionName).orderBy("StartTime").get();
+    wednesdayData = FirebaseFirestore.instance
+        .collection(DatabaseCollection.Semester)
+        .doc(DatabaseCollection.Section)
+        .collection(DatabaseCollection.DayWednesday)
+        .orderBy("StartTime")
+        .get();
   }
 
   @override
@@ -160,7 +166,7 @@ class _WednesdayWeekClassState extends State<WednesdayWeekClass> {
                           },
                           onConfirm: () async {
                             if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-                              await FirebaseFirestore.instance.collection(collectionName).doc(documents[index].id).update({
+                              await FirebaseFirestore.instance.collection(DatabaseCollection.Semester).doc(DatabaseCollection.Section).collection(DatabaseCollection.DayWednesday).doc(documents[index].id).update({
                                 'Name': nameController.text,
                                 'Room': roomController.text,
                                 'StartTime': startTimeController.text,
@@ -168,7 +174,11 @@ class _WednesdayWeekClassState extends State<WednesdayWeekClass> {
                               });
 
                               setState(() {
-                                wednesdayData = FirebaseFirestore.instance.collection(collectionName).orderBy("StartTime").get();
+                                wednesdayData = FirebaseFirestore.instance.
+                                collection(DatabaseCollection.Semester).
+                                doc(DatabaseCollection.Section).
+                                collection(DatabaseCollection.DayWednesday).
+                                orderBy("StartTime").get();
                               });
                               Get.back();
 
@@ -184,10 +194,21 @@ class _WednesdayWeekClassState extends State<WednesdayWeekClass> {
                               padding: const EdgeInsets.only(bottom: 25,right: 20,left: 20),
                               child: IconButton(onPressed: (){
 
-                                FirebaseFirestore.instance.collection(collectionName).doc(documents[index].id).delete();
+                                FirebaseFirestore.instance
+                                    .collection(DatabaseCollection.Semester)
+                                    .doc(DatabaseCollection.Section)
+                                    .collection(DatabaseCollection.DayWednesday)
+                                    .doc(documents[index].id)
+                                    .delete();
 
                                 setState(() {
-                                  wednesdayData = FirebaseFirestore.instance.collection(collectionName).orderBy("StartTime").get();
+                                  FirebaseFirestore.instance
+                                      .collection(DatabaseCollection.Semester)
+                                      .doc(DatabaseCollection.Section)
+                                      .collection(
+                                      DatabaseCollection.DayWednesday)
+                                      .orderBy("StartTime")
+                                      .get();
                                 });
                                 Get.back();
                                 Get.snackbar("Delete", "Class Details Deleted Successfully",backgroundColor: Colors.redAccent,colorText: Colors.white,snackPosition: SnackPosition.TOP);
@@ -299,7 +320,11 @@ class _WednesdayWeekClassState extends State<WednesdayWeekClass> {
                         if (_formKey.currentState != null && _formKey.currentState!.validate()) {
                           // Replace with your Firestore logic to add the new class
                           // Example:
-                          await FirebaseFirestore.instance.collection(collectionName).add({
+                          await FirebaseFirestore.instance
+                              .collection(DatabaseCollection.Semester)
+                              .doc(DatabaseCollection.Section)
+                              .collection(DatabaseCollection.DayWednesday)
+                              .add({
                             'Name': AddNameController.text,
                             'Room': AddRoomController.text,
                             'StartTime': AddStartTimeController.text,
@@ -310,7 +335,12 @@ class _WednesdayWeekClassState extends State<WednesdayWeekClass> {
                           Get.back();
 
                           setState(() {
-                            wednesdayData = FirebaseFirestore.instance.collection(collectionName).orderBy("StartTime").get();
+                            wednesdayData = FirebaseFirestore.instance
+                                .collection(DatabaseCollection.Semester)
+                                .doc(DatabaseCollection.Section)
+                                .collection(DatabaseCollection.DayWednesday)
+                                .orderBy("StartTime")
+                                .get();
                           });
                           Get.snackbar("Added", "Class Added Successfully",backgroundColor: Colors.green,colorText: Colors.white,snackPosition: SnackPosition.TOP);
 

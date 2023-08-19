@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:phoenix_user/Scaren/ChatboxSys/UiBox.dart';
+import 'package:phoenix_user/Utiletis/reUseAble/DatabaseCollection.dart';
 import 'package:phoenix_user/Utiletis/reUseAble/DateTimeClass.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -10,7 +11,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   late Future<QuerySnapshot<Map<String, dynamic>>> chatData;
-  String collectionName = "notices";
+
   DateTimeClass dateTimeClass = DateTimeClass();
 
   final TextEditingController _textController = TextEditingController();
@@ -19,13 +20,13 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    chatData = FirebaseFirestore.instance.collection(collectionName).orderBy("Time",descending: true).get();
+    chatData = FirebaseFirestore.instance.collection(DatabaseCollection.Semester).doc(DatabaseCollection.Section).collection(DatabaseCollection.NoticeCollection).orderBy("Time",descending: true).get();
   }
 
   void _handleSubmitted(String text) {
     if (text.isNotEmpty) {
       //add data to firebase
-      FirebaseFirestore.instance.collection(collectionName).add({
+      FirebaseFirestore.instance.collection(DatabaseCollection.Semester).doc(DatabaseCollection.Section).collection(DatabaseCollection.NoticeCollection).add({
         'Notice': text,
         'Title': 'Admin: CR',
         'Time': dateTimeClass.formattedTime,
@@ -35,7 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
       setState(() {
         _textController.clear();
-        chatData = FirebaseFirestore.instance.collection(collectionName).orderBy("Time",descending: true).get();
+        chatData = FirebaseFirestore.instance.collection(DatabaseCollection.Semester).doc(DatabaseCollection.Section).collection(DatabaseCollection.NoticeCollection).orderBy("Time",descending: true).get();
 
 
       });
@@ -98,7 +99,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildTextComposer() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
         children: <Widget>[
           Flexible(
