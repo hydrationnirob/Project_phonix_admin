@@ -80,10 +80,7 @@ class _NavButtonState extends State<NavButton> {
               icon: Icons.chat,
               text: "Notice",
             ),
-            GButton(
-              icon: Icons.bus_alert,
-              text: "Bus Schedule",
-            ),
+
 
           ],
         ),
